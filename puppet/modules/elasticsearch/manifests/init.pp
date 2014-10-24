@@ -203,6 +203,11 @@ class elasticsearch(
   $instance              = {},
 ) inherits elasticsearch::params {
 
+
+  exec { "apt-update":
+  command => "/usr/bin/apt-get update"
+  }
+
   anchor {'elasticsearch::begin': }
   anchor {'elasticsearch::end': }
 

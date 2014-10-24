@@ -53,8 +53,17 @@ class elasticsearch::java {
 
   ## Install the java package unless already specified somewhere else
   if !defined(Package[$package]) {
-    package { $package:
-      ensure => present
-    }
-  }
+    case $::operatingsystem {
+      'Debian', 'Ubuntu': {
+        Exec["apt-update"] -> package { $package:
+                                ensure => present
+                              }
+                          }
+        default: {
+          package { $package:
+          ensure => present
+          } 
+       }
+   }
+}
 }
